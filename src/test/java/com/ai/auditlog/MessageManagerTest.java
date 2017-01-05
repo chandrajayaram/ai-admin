@@ -5,42 +5,24 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import com.datastax.driver.core.Cluster;
-import com.datastax.driver.core.policies.RoundRobinPolicy;
-import com.datastax.driver.core.policies.TokenAwarePolicy;
+import com.ai.CassandraConfig;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = CassandraConfig.class)
 public class MessageManagerTest {
 	
-	private static MessageManager manager;
-	private static MessageFinder finder;
-	private static Cluster cluster;
-	
-	@BeforeClass
-	public static void initialize(){
-		manager= new MessageManager();
-		finder = new MessageFinder();
-		Cluster.Builder builder = Cluster.builder();
-		builder.withClusterName("localCluster").addContactPoint("127.0.0.1");
-		builder.withLoadBalancingPolicy(new TokenAwarePolicy(new RoundRobinPolicy()));
-		cluster = builder.build();
-		manager.setCluster(cluster);
-	}
-	
-	@Before
-	public void setUp(){
-	}
-	
-	@After
-	public void tearDown(){
-	}
+	@Autowired
+	private MessageManager manager;
+	@Autowired
+	private MessageFinder finder;
 
-	
 	@Test
 	public void testCreate() {
 		Date timeStamp = new Date();
@@ -50,7 +32,7 @@ public class MessageManagerTest {
 		message.setTimeStamp(timeStamp);
 		message.setSoapAction("soapAction");
 		manager.create(message);
-		List<Message> result =finder.findMessageByDateRange("testServiceName", timeStamp,timeStamp,0,0);
+		List<Message> result = finder.findMessageByDateRange("testServiceName", timeStamp, timeStamp, 0, 0);
 		Assert.notNull(result, "Create and find failed");
 	}
 
@@ -63,12 +45,12 @@ public class MessageManagerTest {
 		message.setTimeStamp(timeStamp);
 		message.setSoapAction("soapAction");
 		manager.create(message);
-		List<Message> result =finder.findMessageByDateRange("testServiceName", timeStamp,timeStamp,0,0);
+		List<Message> result = finder.findMessageByDateRange("testServiceName", timeStamp, timeStamp, 0, 0);
 		Assert.notNull(result, "Create and find failed");
 		manager.delete("testServiceName", timeStamp);
-		List<Message> deleted = finder.findMessageByDateRange("testServiceName", timeStamp,timeStamp,0,0);
+		List<Message> deleted = finder.findMessageByDateRange("testServiceName", timeStamp, timeStamp, 0, 0);
 		Assert.isNull(deleted, "message was not deleted successfully");
-}
+	}
 
 	@Test
 	public void testPurgeMessages() {
@@ -76,7 +58,7 @@ public class MessageManagerTest {
 		Date timeStamp = new Date();
 		Date ltimeStamp = timeStamp;
 		calInstance.setTime(timeStamp);
-		for(int i=1;i <= 5;i++){
+		for (int i = 1; i <= 5; i++) {
 			Message message = new Message();
 			message.setServiceName("testServiceName");
 			message.setId(UUID.randomUUID().toString());
@@ -97,7 +79,7 @@ public class MessageManagerTest {
 
 	@Test
 	public void testPurgeAllMessage() {
-	
+
 	}
 
 }

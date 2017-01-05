@@ -7,6 +7,8 @@ package com.ai.auditlog;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Repository;
+
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.PreparedStatement;
@@ -16,6 +18,7 @@ import com.datastax.driver.core.Session;
  *
  * @author Chandra
  */
+@Repository
 public class MessageManager {
 
 	private PreparedStatement insertPreparedStmt;
@@ -42,7 +45,7 @@ public class MessageManager {
 	public void create(Message message) {
 		BoundStatement bound = insertPreparedStmt.bind()
 				.setString("service_name", message.getServiceName())
-				.setTimestamp("create_ts", message.getTimeStamp())
+				.setDate("create_ts", message.getTimeStamp())
 				.setString("payload_id", message.getId())
 				.setString("soap_action", message.getSoapAction());
 		session.execute(bound);
@@ -51,22 +54,22 @@ public class MessageManager {
 	public void delete(String serviceName, Date timeStamp) {
 		BoundStatement bound = deletePreparedStmt.bind()
 				.setString("service_name", serviceName)
-				.setTimestamp("create_ts", timeStamp);
+				.setDate("create_ts", timeStamp);
 		session.execute(bound);
 	}
 
 	public void purgeMessages(String serviceName, Date startTimeStamp, Date endTimeStamp) {
 		BoundStatement bound = purgePreparedStmt.bind()
 				.setString("service_name", serviceName)
-				.setTimestamp("start_ts", startTimeStamp)
-				.setTimestamp("end_ts", endTimeStamp);
+				.setDate("start_ts", startTimeStamp)
+				.setDate("end_ts", endTimeStamp);
 		session.execute(bound);
 	}
 
 	public void purgeAllMessage(Date startTimeStamp, Date endTimeStamp) {
 		BoundStatement bound = purgeAllPreparedStmt.bind()
-				.setTimestamp("start_ts", startTimeStamp)
-				.setTimestamp("end_ts", endTimeStamp);
+				.setDate("start_ts", startTimeStamp)
+				.setDate("end_ts", endTimeStamp);
 		session.execute(bound);
 	}
 }

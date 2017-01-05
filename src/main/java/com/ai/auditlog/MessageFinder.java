@@ -45,7 +45,7 @@ public class MessageFinder {
 				msg= new Message();
 				msg.setId(row.getString("payload_id"));
 				msg.setServiceName(row.getString("service_name"));
-				msg.setTimeStamp(row.getTimestamp("create_ts"));
+				msg.setTimeStamp(row.getDate("create_ts"));
 				msg.setSoapAction(row.getString("soap_action"));
 				messages.add(msg);
 			}
@@ -70,8 +70,8 @@ public class MessageFinder {
 			public BoundStatement bindValues(PreparedStatement ps) throws DriverException {
 				BoundStatement bound = ps.bind()
 						.setString("service_name", serviceName)
-						.setTimestamp("start_ts", startTimeStamp)
-						.setTimestamp("end_ts", endTimeStamp);
+						.setDate("start_ts", startTimeStamp)
+						.setDate("end_ts", endTimeStamp);
 				return bound;
 			}},  resultSetExtractor);
 	}
