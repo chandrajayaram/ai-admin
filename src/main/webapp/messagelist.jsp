@@ -44,7 +44,7 @@
 	</nav>
 	<br />
 	<div class="container">
-		<form action="/auditlog.jsp id="searchForm" method="post">
+		<form action="/messagelist" id="searchForm" method="post">
 			<label for="serviceName">Service Name</label> 
 			<input type="text" id="serviceName" name="serviceName"> 
 			

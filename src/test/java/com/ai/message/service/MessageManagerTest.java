@@ -1,4 +1,4 @@
-package com.ai.auditlog;
+package com.ai.message.service;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -14,6 +14,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import com.ai.CassandraConfig;
+import com.ai.message.domain.Message;
+import com.ai.message.service.MessageFinder;
+import com.ai.message.service.MessageManager;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = CassandraConfig.class)

@@ -1,8 +1,6 @@
 package com.ai;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,10 +13,8 @@ import com.datastax.driver.core.policies.RoundRobinPolicy;
 import com.datastax.driver.core.policies.TokenAwarePolicy;
 
 @Configuration
-@ComponentScan(basePackages={"com.ai.auditlog"})
-@PropertySource(value = { "classpath:cassandra.properties" })
-@EnableAutoConfiguration
-@EnableConfigurationProperties
+@ComponentScan(basePackages={"com.ai.message","com.ai.message.ui","com.ai.message.service"})
+@PropertySource(value = { "classpath:cassandra.properties","classpath:application.properties" })
 public class CassandraConfig {
 	
 	  @Autowired

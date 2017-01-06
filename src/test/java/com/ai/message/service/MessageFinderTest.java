@@ -1,4 +1,4 @@
-package com.ai.auditlog;
+package com.ai.message.service;
 
 import static org.junit.Assert.*;
 
