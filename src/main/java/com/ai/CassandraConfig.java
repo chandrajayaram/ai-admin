@@ -8,14 +8,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
-import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
-import org.springframework.data.cassandra.config.SchemaAction;
-import org.springframework.data.cassandra.convert.CassandraConverter;
-import org.springframework.data.cassandra.convert.MappingCassandraConverter;
-import org.springframework.data.cassandra.core.CassandraTemplate;
-import org.springframework.data.cassandra.mapping.BasicCassandraMappingContext;
-import org.springframework.data.cassandra.mapping.CassandraMappingContext;
+
+import com.datastax.driver.core.Cluster;
+import com.datastax.driver.core.Session;
+import com.datastax.driver.core.policies.RoundRobinPolicy;
+import com.datastax.driver.core.policies.TokenAwarePolicy;
 
 @Configuration
 @ComponentScan(basePackages={"com.ai.auditlog"})
@@ -28,6 +25,18 @@ public class CassandraConfig {
 	  private Environment env;
 	  
 	  @Bean
+	  public Session session(){
+	  
+	  	Cluster.Builder builder = Cluster.builder();
+		builder.withClusterName("localCluster").addContactPoint("127.0.0.1");
+		builder.withLoadBalancingPolicy(new TokenAwarePolicy(new RoundRobinPolicy()));
+		Cluster cluster = builder.build();
+		return cluster.connect("message_store_ks");
+		
+	  }
+		
+	  
+	  /*@Bean
 	  public CassandraClusterFactoryBean cluster() {
 	    CassandraClusterFactoryBean cluster = new CassandraClusterFactoryBean();
 	    cluster.setContactPoints(env.getProperty("cassandra.contactpoints"));
@@ -59,4 +68,4 @@ public class CassandraConfig {
 	  public CassandraTemplate cassandraTemplate() throws Exception {
 	    return new CassandraTemplate(session().getObject());
 	  }
-}
+*/}

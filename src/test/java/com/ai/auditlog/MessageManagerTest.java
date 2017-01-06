@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,12 @@ public class MessageManagerTest {
 	private MessageManager manager;
 	@Autowired
 	private MessageFinder finder;
-
+	
+	@Before
+	public void testClear(){
+		manager.purgeAllMessage("testServiceName");
+	}
+	
 	@Test
 	public void testCreate() {
 		Date timeStamp = new Date();
@@ -49,7 +55,7 @@ public class MessageManagerTest {
 		Assert.notNull(result, "Create and find failed");
 		manager.delete("testServiceName", timeStamp);
 		List<Message> deleted = finder.findMessageByDateRange("testServiceName", timeStamp, timeStamp, 0, 0);
-		Assert.isNull(deleted, "message was not deleted successfully");
+		Assert.isTrue(deleted.size() == 0, "message was not deleted successfully");
 	}
 
 	@Test
