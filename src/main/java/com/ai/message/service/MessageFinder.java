@@ -26,9 +26,9 @@ import com.datastax.driver.core.Session;
 @Repository
 public class MessageFinder {
 	
-	private static final String SELECT_MESSAGE_BY_NAME = "SELECT service_name, create_ts, soap_action FROM message WHERE service_name = :service_name";
-	private static final String SELECT_MESSAGE_BY_DATE = "SELECT service_name, create_ts, soap_action FROM message WHERE service_name = :service_name and create_ts = :create_ts";
-	private static final String SELECT_MESSAGE_BY_DATE_RANGE = "SELECT service_name, create_ts, soap_action FROM message WHERE service_name= :service_name and create_ts >= :start_ts and create_ts <= :end_ts";
+	private static final String SELECT_MESSAGE_BY_NAME = "SELECT payload_id,service_name, create_ts, soap_action,mime_headers FROM message WHERE service_name = :service_name";
+	private static final String SELECT_MESSAGE_BY_DATE = "SELECT payload_id,service_name, create_ts, soap_action,mime_headers FROM message WHERE service_name = :service_name and create_ts = :create_ts";
+	private static final String SELECT_MESSAGE_BY_DATE_RANGE = "SELECT payload_id,service_name, create_ts, soap_action,mime_headers FROM message WHERE service_name= :service_name and create_ts >= :start_ts and create_ts <= :end_ts";
 	
 	private Session session;
 	
@@ -45,9 +45,11 @@ public class MessageFinder {
 		ResultSet rs = session.execute(SELECT_MESSAGE_BY_NAME, values);
 		for(Row row: rs.all()){
 			msg= new Message();
+			msg.setId("c " +row.getString("payload_id"));
 			msg.setServiceName(serviceName);
 			msg.setTimeStamp(row.getTimestamp("create_ts"));
 			msg.setSoapAction(row.getString("soap_action"));
+			msg.setMimeHeaders(row.getMap("mime_headers",String.class, String.class));
 			messages.add(msg);
 		}
 		return messages;
@@ -63,9 +65,11 @@ public class MessageFinder {
 		Row row = rs.one();
 		if(row!=null){
 			msg= new Message();
+			msg.setId(row.getString("payload_id"));
 			msg.setServiceName(serviceName);
 			msg.setTimeStamp(row.getTimestamp("create_ts"));
-			msg.setSoapAction(row.getString("soap_action"));	
+			msg.setSoapAction(row.getString("soap_action"));
+			msg.setMimeHeaders(row.getMap("mime_headers",String.class, String.class));
 		}
 		return msg;
 
@@ -84,9 +88,11 @@ public class MessageFinder {
 		ResultSet rs = session.execute(SELECT_MESSAGE_BY_DATE_RANGE, values);
 		for(Row row: rs.all()){
 			msg= new Message();
+			msg.setId(row.getString("payload_id"));
 			msg.setServiceName(serviceName);
 			msg.setTimeStamp(row.getTimestamp("create_ts"));
 			msg.setSoapAction(row.getString("soap_action"));
+			msg.setMimeHeaders(row.getMap("mime_headers",String.class, String.class));
 			messages.add(msg);
 		}
 		return messages;

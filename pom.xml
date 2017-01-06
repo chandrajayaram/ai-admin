@@ -11,7 +11,7 @@
 		<jstl.version>1.2</jstl.version>
 		<netty-version>4.1.5.Final</netty-version>
 	</properties>
-
+	
 	<dependencies>
 		<!-- jstl -->
 		<dependency>
@@ -78,5 +78,20 @@
 		<url>https://artifacts.alfresco.com/nexus/content/repositories/public/</url>
 	</repository>
 	</repositories>
+	<build>
+		<plugins>
+			<plugin>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-maven-plugin</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>springloaded</artifactId>
+            <version>1.2.0.RELEASE</version>
+        </dependency>
+    </dependencies>
+</plugin>
+		</plugins>
+	</build>
 
 </project>

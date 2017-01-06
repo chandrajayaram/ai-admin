@@ -20,7 +20,7 @@ public class Message {
     private Date timeStamp;
     private String serviceName; 
     private String soapAction;
-    private Map<String, String> httpHeaders;
+    private Map<String, String> mimeHeaders;
     private SOAPMessage message;
 
     /**
@@ -54,15 +54,15 @@ public class Message {
    /**
      * @return the httpHeaders
      */
-    public Map<String, String> getHttpHeaders() {
-        return httpHeaders;
+    public Map<String, String> getMimeHeaders() {
+        return mimeHeaders;
     }
 
     /**
      * @param httpHeaders the httpHeaders to set
      */
-    public void setHttpHeaders(Map<String, String> httpHeaders) {
-        this.httpHeaders = httpHeaders;
+    public void setMimeHeaders(Map<String, String> mimeHeaders) {
+        this.mimeHeaders = mimeHeaders;
     }
 
     /**

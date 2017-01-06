@@ -32,7 +32,7 @@ public class MessageManager {
 	
 	private static final String INSERT_MESSAGE="INSERT INTO message(service_name, create_ts, payload_id , soap_action) values (:service_name, :create_ts, :payload_id , :soap_action)";
 	private static final String DELETE_MESSAGE="DELETE FROM message WHERE service_name = :service_name and create_ts = :create_ts";
-	private static final String PURGE_MESSAGE="DELETE FROM message WHERE service_name = :service_name and create_ts >= :start_ts and create_ts <=:end_ts";
+	private static final String PURGE_MESSAGE="DELETE FROM message WHERE service_name = :service_name and create_ts >= :start_ts and create_ts <= : end_ts";
 	private static final String PURGE_MESSAGE_BY_SERVICE="DELETE FROM message WHERE service_name = :service_name";
 	
 	private static final String PURGE_ALL_MESSAGES="";

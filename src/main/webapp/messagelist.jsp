@@ -83,7 +83,7 @@
 			<tr class="odd">
 				<td>${message.id}</td>
 				<td>${message.timeStamp}</td>
-				<td>${message.httpHeaders}</td>
+				<td>${message.mimeHeaders}</td>
 				<td>New</td>
 				</tr>
 			</c:forEach>
