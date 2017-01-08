@@ -21,9 +21,7 @@
 	</nav>
 	<br />
 	<div class="container">
-			<textarea rows="20" cols="40" style="border:none;">
-			${message}
-			</textarea>
+			<textarea rows="20" cols="40" style="border:none;">${message}</textarea>
 	</div>
 	
 

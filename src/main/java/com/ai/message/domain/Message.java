@@ -5,25 +5,46 @@
  */
 package com.ai.message.domain;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.Date;
-import java.util.Map;
 
+import javax.xml.soap.MessageFactory;
+import javax.xml.soap.MimeHeaders;
+import javax.xml.soap.SOAPConstants;
+import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
 /**
  *
  * @author Chandra
  */
-@SuppressWarnings("restriction")
 public class Message {
     private String id;
     private Date timeStamp;
     private String serviceName; 
     private String soapAction;
-    private Map<String, String> mimeHeaders;
-    private SOAPMessage message;
+    private MimeHeaders mimeHeaders;
+    private SOAPMessage soapMessage;
+    private String status;
+    private static MessageFactory factory;
+    static{
+    	try{
+    		factory = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL);	
+    	}catch (Exception e) {
+    		e.printStackTrace();
+		}
+    	 
+    }
+    public String getStatus() {
+		return status;
+	}
 
-    /**
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	/**
      * @return the id
      */
     public String getId() {
@@ -54,29 +75,29 @@ public class Message {
    /**
      * @return the httpHeaders
      */
-    public Map<String, String> getMimeHeaders() {
+    public MimeHeaders getMimeHeaders() {
         return mimeHeaders;
     }
 
     /**
      * @param httpHeaders the httpHeaders to set
      */
-    public void setMimeHeaders(Map<String, String> mimeHeaders) {
+    public void setMimeHeaders(MimeHeaders mimeHeaders) {
         this.mimeHeaders = mimeHeaders;
     }
 
     /**
      * @return the message
      */
-    public SOAPMessage getMessage() {
-        return message;
+    public SOAPMessage getSoapMessage() {
+        return soapMessage;
     }
 
     /**
      * @param message the message to set
      */
-    public void setMessage(SOAPMessage message) {
-        this.message = message;
+    public void setSoapMessage(SOAPMessage message) {
+        this.soapMessage = message;
     }
 
     /**
@@ -106,5 +127,14 @@ public class Message {
 	public void setSoapAction(String soapAction) {
 		this.soapAction = soapAction;
 	}
+    
+	public void setMessage(byte[] message){
+		try{
+			soapMessage = factory.createMessage(mimeHeaders, new ByteArrayInputStream(message));	
+		}catch ( IOException | SOAPException e) {
+			e.printStackTrace();
+		}
+		
+    }
     
  }

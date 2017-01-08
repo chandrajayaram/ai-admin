@@ -1,12 +1,17 @@
+------=_Part_0_542147405.1483763423186
+Content-Type: application/soap+xml; charset=utf-8
 <?xml version="1.0"?>
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2001/12/soap-envelope" SOAP-ENV:encodingStyle="http://www.w3.org/2001/12/soap-encoding" >
-
    <SOAP-ENV:Body xmlns:m="http://www.xyz.org/quotations" >
-	
       <m:GetQuotation>
          <m:QuotationsName>MiscroSoft</m:QuotationsName>
       </m:GetQuotation>
-		
    </SOAP-ENV:Body>
-	
 </SOAP-ENV:Envelope>
+------=_Part_0_542147405.1483763423186
+Content-Type: text/plain
+Content-ID: update_address
+
+Update address for Sunny Skies Inc., to 10 Upbeat Street, Pleasant Grove, CA 95439
+------=_Part_0_542147405.1483763423186--
+			
