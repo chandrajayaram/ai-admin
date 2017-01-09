@@ -25,6 +25,12 @@ public class MessageService {
 	public void setMessageFinder(MessageFinder messageFinder) {
 		this.messageFinder = messageFinder;
 	}
+	
+	public List<Message> findMessageByServiceName(String serviceName){
+		
+		return messageFinder.findMessageByServiceName(serviceName, 0, 0);
+	}
+	
 	public List<Message> findMessageByDateRange(String serviceName, Date startTimeStamp, Date endTimeStamp, int start,
 			int count){
 		Calendar cal = Calendar.getInstance();

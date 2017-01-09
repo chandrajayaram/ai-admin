@@ -60,7 +60,7 @@ public class MessageFinderTest {
 	
 	@After
 	public void teardown(){
-		manager.purgeAllMessage("testServiceName");
+		//manager.purgeAllMessage("testServiceName");
 	}
 	
 	@Test

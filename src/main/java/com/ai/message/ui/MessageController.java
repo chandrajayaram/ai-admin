@@ -1,5 +1,8 @@
 package com.ai.message.ui;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +26,29 @@ public class MessageController {
 	}
 	
 
-	@PostMapping("/messagelist")
-    public ModelAndView processSearchQuery(@RequestParam("serviceName") String serviceName){
+	@GetMapping("/messagelist")
+    public ModelAndView processSearchQuery(@RequestParam("serviceName") String serviceName, @RequestParam("searchBy") String searchBy, @RequestParam("date") String date, @RequestParam("startDate") String startDate, String endDate) throws ParseException{
 		ModelAndView model = new ModelAndView("messagelist");
-		model.addObject("messageList", getList(serviceName));
-		return model;
+		if(serviceName == null || serviceName.isEmpty()){
+			return model;
+		}
+		if("serviceName".equals(searchBy)){
+			model.addObject("messageList", messageService.findMessageByServiceName(serviceName));
+			return model;
+		}
+		SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
+		if("date".equals(searchBy)){
+			Date startTimeStamp = fmt.parse(date);
+			model.addObject("messageList", messageService.findMessageByDate(serviceName, startTimeStamp , 0, 0));
+			return model;
+		}
+		if("dateRange".equals(searchBy)){
+			Date startTimeStamp = fmt.parse(startDate);
+			Date endTimeStamp = fmt.parse(endDate);
+			model.addObject("messageList", messageService.findMessageByDateRange(serviceName, startTimeStamp, endTimeStamp, 0, 0));
+			return model;
+		}
+		return null;
 	}
 
 	private List<Message> getList(String serviceName) {

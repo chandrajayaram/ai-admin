@@ -17,8 +17,12 @@
 		$("#startDate").datepicker();
 		$("#endDate").datepicker();
 		$("#bydaterange").hide();
+		$("#bydate").hide();
 		$("#searchBy").change(function() {
-			if (this.value == 'date') {
+			if(this.value == 'serviceName'){
+				$("#bydate").hide();
+				$("#bydaterange").hide();
+			}else if (this.value == 'date') {
 				$("#bydate").show();
 				$("#bydaterange").hide();
 			} else {
@@ -44,14 +48,15 @@
 	</nav>
 	<br />
 	<div class="container">
-		<form action="/messagelist" id="searchForm" method="post">
+		<form action="/messagelist" id="searchForm">
 			<label for="serviceName">Service Name</label> 
 			<input type="text" id="serviceName" name="serviceName"> 
 			
 			<label for="searchBy">Search by</label> 
 			<select id="searchBy" name="searchBy" id="searchBy">
-				<option value="date" selected>Date</option>
-				<option value="dateRange">Date range</option>
+				<option value="serviceName" selected>Service name</option>
+				<option value="date">Service name and date</option>
+				<option value="dateRange">Service name and date range</option>
 			</select> 
 			<span id="bydate">
 				<label for="date">Date</label> 
