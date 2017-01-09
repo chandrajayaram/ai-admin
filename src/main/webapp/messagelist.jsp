@@ -73,7 +73,6 @@
 			<tr>
 				<th>Id</th>
 				<th>Time stamp</th>
-				<th>Mime Headers</th>
 				<th>Status</th>
 			</tr>
 		</thead>
@@ -81,10 +80,9 @@
 			<c:if test="${messageList != null}" >
 			<c:forEach var="message" items="${messageList}">
 			<tr class="odd">
-				<td>${message.id}</td>
+				<td><a href="/messagedetail?payloadId=${message.id}">${message.id}</a></td>
 				<td>${message.timeStamp}</td>
-				<td>${message.mimeHeaders}</td>
-				<td>New</td>
+				<td>${message.status}</td>
 				</tr>
 			</c:forEach>
 			

@@ -21,7 +21,7 @@
 	</nav>
 	<br />
 	<div class="container">
-			<textarea rows="20" cols="40" style="border:none;">${message.messageXml}</textarea>
+			<textarea style="border:none; height: 476px; width: 1101px;" >${message.soapMessageAsString}</textarea>
 	</div>
 	
 

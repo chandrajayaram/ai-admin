@@ -16,7 +16,7 @@ nav a {
   padding: 2px;
   padding-left: 20px;
 }
-nav a:link, a:visited {
+nav a:link {
   font-family: Verdana, arial, sans-serif;
   font-size: 11px;
   font-weight: bold;	
@@ -24,6 +24,15 @@ nav a:link, a:visited {
   color: #ffffff;
   text-decoration: none;
 }
+nav a:visited {
+  font-family: Verdana, arial, sans-serif;
+  font-size: 11px;
+  font-weight: bold;	
+  line-height: 16px;
+  text-decoration: none;
+}
+
+
 input[type=text], select {
     width: 10%;
     margin: 8px 0;

@@ -15,6 +15,8 @@ import javax.xml.soap.SOAPConstants;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
+import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
+
 /**
  *
  * @author Chandra
@@ -136,5 +138,16 @@ public class Message {
 		}
 		
     }
+
+	public String getSoapMessageAsString() {
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		try {
+			soapMessage.writeTo(out);
+			return out.toString();
+		} catch (SOAPException | IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
     
  }

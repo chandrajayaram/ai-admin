@@ -115,6 +115,13 @@ public class MessageFinder {
 		return msg;
 	}
 	
+	public Message findMessageById(String payloadId) {
+		Message  msg= new Message();
+		msg.setId(payloadId);
+		readPayload(msg);
+		return msg;
+	}
+	
 	private void readPayload(Message message) {
 		Map<String, Object> values = new HashMap<>();
 		values.put("payload_id", message.getId());
