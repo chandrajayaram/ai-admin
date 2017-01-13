@@ -1,10 +1,14 @@
 package com.ai.message.service;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.xml.soap.MimeHeaders;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,8 +80,25 @@ public class MessageService {
 		return messageFinder.findMessageById(payloadId);
 	}
 	
-	public void process(MimeHeaders headers, String soapMessage) {
-
+	public void process(MimeHeaders headers, SOAPMessage soapMessage) {
+		Date timeStamp = new Date();
+		Message message = new Message();
+		String id =UUID.randomUUID().toString();
+		message.setId(id);
+		message.setTimeStamp(timeStamp);
+		message.setSoapMessage(soapMessage);
+		String soapAction= headers.getHeader("SOAPAction")[0];
+		message.setSoapAction(soapAction);
+		message.setServiceName(getServiceName(soapAction));
+		try {
+			messageManager.create(message);
+		} catch (SOAPException | IOException e) {
+			e.printStackTrace(System.out);
+		}
+		
+	}
+	private String getServiceName(String soapAction) {
+		return soapAction.substring(soapAction.lastIndexOf("/") + 1);
 		
 	}
 	

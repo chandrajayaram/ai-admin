@@ -16,7 +16,7 @@ import com.datastax.driver.core.policies.TokenAwarePolicy;
 import com.datastax.driver.core.schemabuilder.UDTType;
 
 @Configuration
-@ComponentScan(basePackages={"com.ai.message","com.ai.message.ui","com.ai.message.service"})
+@ComponentScan(basePackages={"com.ai.message","com.ai.message.ui","com.ai.message.service","com.ai.message.servlet"})
 @PropertySource(value = { "classpath:cassandra.properties","classpath:application.properties" })
 public class CassandraConfig {
 	

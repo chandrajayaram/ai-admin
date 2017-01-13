@@ -1,6 +1,5 @@
 package com.ai.message.servlet;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
@@ -15,11 +14,12 @@ import javax.xml.soap.SOAPMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.message.service.MessageService;
 
-@Controller
+@Controller("/SOAServlet")
 public class MessageServlet {
 	@Autowired
 	private MessageService service;
@@ -34,15 +34,13 @@ public class MessageServlet {
 	        }
 	     };
 
+	@PostMapping     
 	public @ResponseBody void process( HttpServletRequest request, HttpServletResponse response) throws IOException, SOAPException{
 	      MimeHeaders headers = getHeaders(request);
 	      InputStream is = request.getInputStream();
 	      SOAPMessage msg = messageFactory.createMessage(headers, is);
-	      ByteArrayOutputStream stream = new ByteArrayOutputStream();
-	      msg.writeTo(stream);
-	      String soapMessage = new String(stream.toByteArray());
-	      service.process(headers, soapMessage);
-	      
+	      service.process(headers, msg);
+	      response.setStatus(200);
 	}
 
 	private MimeHeaders getHeaders(HttpServletRequest request) {
