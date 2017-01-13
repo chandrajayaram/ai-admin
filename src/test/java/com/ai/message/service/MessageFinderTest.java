@@ -31,7 +31,7 @@ public class MessageFinderTest {
 	private MessageManager manager;
 	@Autowired
 	private MessageFinder finder;
-	private String serviceName = "testServiceName";
+	private String serviceName = "testServiceName1";
 	
 	@Before
 	public void setup() throws SOAPException, IOException{
@@ -47,9 +47,9 @@ public class MessageFinderTest {
 			message.setTimeStamp(ltimeStamp);
 			message.setSoapAction("soapAction");
 			MimeHeaders mimeHeaders = new MimeHeaders();
-			mimeHeaders.addHeader("Content-Type", "application/soap+xml");
+			mimeHeaders.addHeader("Content-Type", "text/xml");
 			message.setMimeHeaders(mimeHeaders);
-			MessageFactory factory = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL);
+			MessageFactory factory = MessageFactory.newInstance(SOAPConstants.SOAP_1_1_PROTOCOL);
 			SOAPMessage  soapMessage = factory.createMessage(mimeHeaders , ClassLoader.getSystemResourceAsStream("data.xml"));
 			message.setSoapMessage(soapMessage);
 			manager.create(message);
@@ -60,7 +60,7 @@ public class MessageFinderTest {
 	
 	@After
 	public void teardown(){
-		//manager.purgeAllMessage("testServiceName");
+		manager.purgeAllMessage(serviceName);
 	}
 	
 	@Test

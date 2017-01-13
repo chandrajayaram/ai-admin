@@ -49,9 +49,9 @@ public class MessageManagerTest {
 		message.setTimeStamp(timeStamp);
 		message.setSoapAction("soapAction");
 		MimeHeaders mimeHeaders = new MimeHeaders();
-		mimeHeaders.addHeader("Content-Type", "application/soap+xml");
+		mimeHeaders.addHeader("Content-Type", "text/xml");
 		message.setMimeHeaders(mimeHeaders);
-		MessageFactory factory = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL);
+		MessageFactory factory = MessageFactory.newInstance(SOAPConstants.SOAP_1_1_PROTOCOL);
 		SOAPMessage  soapMessage = factory.createMessage(mimeHeaders , ClassLoader.getSystemResourceAsStream("data.xml"));
 		message.setSoapMessage(soapMessage);
 		manager.create(message);

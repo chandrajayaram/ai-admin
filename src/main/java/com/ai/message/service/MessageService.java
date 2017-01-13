@@ -87,6 +87,7 @@ public class MessageService {
 		message.setId(id);
 		message.setTimeStamp(timeStamp);
 		message.setSoapMessage(soapMessage);
+		message.setMimeHeaders(headers);
 		String soapAction= headers.getHeader("SOAPAction")[0];
 		message.setSoapAction(soapAction);
 		message.setServiceName(getServiceName(soapAction));
@@ -98,7 +99,7 @@ public class MessageService {
 		
 	}
 	private String getServiceName(String soapAction) {
-		return soapAction.substring(soapAction.lastIndexOf("/") + 1);
+		return soapAction.substring(soapAction.lastIndexOf("/") + 1,soapAction.length()-1);
 		
 	}
 	

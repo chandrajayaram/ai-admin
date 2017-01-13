@@ -32,7 +32,7 @@ public class Message {
     private static MessageFactory factory;
     static{
     	try{
-    		factory = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL);	
+    		factory = MessageFactory.newInstance(SOAPConstants.SOAP_1_1_PROTOCOL);	
     	}catch (Exception e) {
     		e.printStackTrace();
 		}
